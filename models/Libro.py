@@ -9,8 +9,8 @@ class Libro:
         self.id_editorial = id_editorial
 
     def __str__(self):
-        return (f"ID: {self.id} Precio: {self.precio}€ Titulo: {self.titulo} Nº Páginas: {self.numpag} Temática: {self.tematica}"
-                f"ID Editorial: {self.id_editorial}")
+        return (f"ID: {self.id}\nPrecio: {self.precio}€\nTitulo: {self.titulo}\nNº Páginas: {self.numpag}\nTemática: {self.tematica}\n"
+                f"ID Editorial: {self.id_editorial}\n")
 
     def serialize(self):
         return {"id": self.id, "precio": self.precio, "isbn": self.isbn, "titulo": self.titulo, "numpag": self.numpag, "tematica": self.tematica, "id_editorial": self.id_editorial}
