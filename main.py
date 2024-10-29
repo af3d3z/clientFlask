@@ -57,6 +57,12 @@ while option > 0:
             Editoriales.borrar_editorial(token)
         case 6:
             Libros.get_all()
+        case 7:
+            Libros.agregar_libro(token)
+        case 8:
+            Libros.editar_libro(token)
         case 9:
             Libros.get_one()
+        case 10:
+            Libros.borrar_libro(token)
         

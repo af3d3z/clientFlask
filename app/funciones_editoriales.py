@@ -21,11 +21,9 @@ def get_all():
                 correo=editorial['correo'], 
                 tlf=editorial['tlf'])
             print(new_editorial)
-            
-        input("Pulsa enter para continuar.")
     else:
         print("Error: " + str(res.content))
-        input("Pulsa enter para continuar.")
+    input("Pulsa enter para continuar.")
         
 def get_one():
     number = int(input("Introduce el id de la editorial: "))

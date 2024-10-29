@@ -67,8 +67,54 @@ def agregar_libro(token):
     )
     
     if res.status_code == 201:
-        print(f"Se ha agregado correctamente el libro con el id {libro['id']}")
+        print(f"Se ha agregado correctamente el libro.")
     else:
         print(f"Error: {res.content}")
         
+    input("Pulsa enter para continuar.")
+    
+def editar_libro(token):
+    id = int(input("Introduce el id del libro a editar: "))
+    libro_prev = requests.get(f"http://localhost:5050/libros/{str(id)}")
+    if libro_prev.status_code == 200:
+        libro_prev_json = libro_prev.json()
+        precio = float(input(f"Precio ({libro_prev_json['precio']}):"))
+        isbn = input(f"ISBN ({libro_prev_json['isbn']}): ")
+        titulo = input(f"Título ({libro_prev_json['titulo']}): ")
+        numpag = input(f"Nº de páginas: ({libro_prev_json['numpag']}): ")
+        tematica = input(f"Temática ({libro_prev_json['tematica']}): ")
+        id_editorial = int(input(f"Id editorial ({libro_prev_json['id_editorial']}): "))
+        
+        libro = Libro.Libro(id, precio, isbn, titulo, numpag, tematica, id_editorial)
+        
+        res = requests.put(
+            f"http://localhost:5050/libros/{str(id)}",
+            json=libro.serialize(),
+            headers={"Content-Type": "application/json", "Authorization": "Bearer " + token}
+        )
+        if res.status_code == 200:
+            print("Libro modificado.")
+        else:
+            print(f"No se pudo modificar la editorial {res.content}")
+        
+    else:
+        print("Hubo un error al intentar acceder a los datos. Error: " + str(libro_prev.content))
+    
+    input("Pulsa enter para continuar.")
+    
+
+def borrar_libro(token):
+    id = int(input("Introduce el id del libro a borrar: "))
+    confirmation = input("¿Está seguro de querer borrarlo? (Sí/No): ")
+    if confirmation.lower() == 's':
+        res = requests.delete(
+            f"http://localhost:5050/libros/{id}",
+            headers={"Authorization": "Bearer " + token}
+        )
+    
+        if res.status_code == 200:
+            print("El libro se ha eliminado correctamente.")
+        else: 
+            print(f"Ha ocurrido un error: {str(res.content)}")
+            
     input("Pulsa enter para continuar.")
